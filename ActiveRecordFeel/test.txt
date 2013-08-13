@@ -1,0 +1,74 @@
+Class Bug
+---------
+public static function find() : Bug
+public function save()
+public function delete()
+public function getProduct() : Product
+public function getUsers() : User[]
+
+
+
+
+class Product
+-------------
+public static function find() : Product
+public function save()
+public function delete()
+
+public function getBugs() : Bug[]
+public function removeBug(Bug) : null
+public function addBug(Bug)
+
+
+
+class User
+----------
+public static function find() : User
+public function save()
+public function delete()
+
+public function getBugs() : Bug[]
+public function addBug(Bug)
+public function removeBug(Bug)
+
+
+products
+-------
+id
+name
+
+* product has many bugs
+getBugs : Bug[] --> Bug.findByProduct(Product)
+removeBug(Bug)  --> Bug.delete()
+
+users
+----
+id
+name
+
+* user has many bugs assigned to work on
+* user has many bugs that user reported
+getAssignedBugs() : Bug[]
+removeAssignedBug(Bug)
+
+
+users_bugs
+----------
+user_id_fk
+bug_id_fk
+
+
+
+bugs
+----
+id
+desc
+product_id_fk
+reported_by_user_id_fk
+
+* bug has many users assigned to work on it
+findByProduct(Product) : Bug[]
+getAssignedUsers() : User[] --> users_bugs.find_by_bug_id
+getReportedUser() : User --> User.find(user_id)
+setReportedUser(User)
+
