@@ -133,6 +133,64 @@ $stop       = microtime(true);
 $elapsed    = ($stop - $start) * 1000;
 echo sprintf("%01.2f", $elapsed) . "mSecs\n";
 echo 'hash = ' . $hash . "\n\n";
+
+
+
+
+
+
+
+echo 'Create salt using mcrypt_create_iv(22, MCRYPT_DEV_URANDOM): ';
+$start      = microtime(true);
+
+$salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM);
+$salt = base64_encode($salt);
+$salt = str_replace('+', '.', $salt);
+
+//$salt = 'abcdefghijklmnopqrstuvwxyz123456';
+
+$stop       = microtime(true);
+$elapsed    = ($stop - $start) * 1000;
+echo sprintf("%01.2f", $elapsed) . "mSecs\n";
+echo '$salt = ' . $salt . "\n\n";
+
+
+
+
+
+
+echo 'Create hash using crypt(rasmuslerdorf, $2y$10$.$salt.$): ';
+$start      = microtime(true);
+
+$hash = crypt('rasmuslerdorf', '$2y$10$'.$salt.'$');
+
+$stop       = microtime(true);
+$elapsed    = ($stop - $start) * 1000;
+echo sprintf("%01.2f", $elapsed) . "mSecs\n";
+echo '$hash = ' . $hash . "\n\n";
+
+
+
+
+
+echo 'Create hash using crypt(rasmuslerdorf, $hash): ';
+$start      = microtime(true);
+
+$hash = crypt('rasmuslerdorf', $hash);
+
+$stop       = microtime(true);
+$elapsed    = ($stop - $start) * 1000;
+echo sprintf("%01.2f", $elapsed) . "mSecs\n";
+echo '$hash = ' . $hash . "\n\n";
+
+
+
+
+
+
+
+
+
 ?>
 
 </pre>
